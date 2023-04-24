@@ -11,6 +11,8 @@ I have included both the minified version to paste into the console and also the
 
 Using the scripts to retrieve your data is very simple. 
 
+**Note:** All of the following steps were performed and screenshotted in Chrome. Other browsers may not work as intended, but feel free to try them out. Please make sure you are logged in or GeoGuessr's API won't let you access the data. 
+
 ## Phase 1: Fetching Duel IDs
 
 1. Open [your GeoGuessr profile](https://www.geoguessr.com/me/profile)
@@ -43,6 +45,8 @@ await(async(d)=>{let e="",t=[];for(let a=0;a<100;a++){console.log("Fetching page
 
 
 ## Phase 2: Fetching Duel Data
+
+From what I've tested, this step doesn't seem to work in Firefox but works fine in Chrome. I haven't tested other browsers, but if you encounter an error, try running it in Chrome first.
 
 1. In a new window, navigate to the [GeoGuessr API](https://game-server.geoguessr.com/).
 
@@ -77,7 +81,7 @@ function C(e,r){let t=0,s=0,a=0;for(let n of e)a++,t+=n.distance,s+=(new Date(n.
 
 ## Phase 3: Data Visualization
 
-To visualize the data you just copied at the end of phase 2, you can make your own spreadsheet or use one I have created. To use my spreadsheet template:
+To visualize the data you just copied at the end of phase 2, you can make your own spreadsheet or use one I have created. By default, the spreadsheet calculates stats up to 999 duels. If you want to include more, you might need to edit the formulas and extend the calculations sheet. To use my spreadsheet template:
 
 1. Go to [the Google Sheets document](https://docs.google.com/spreadsheets/d/11b8F5nEf8slJRMtsh49wSosfxnbN631APH5Z7opBDQo/edit?usp=sharing)
 
@@ -86,3 +90,4 @@ To visualize the data you just copied at the end of phase 2, you can make your o
 3. In your copy of the spreadsheet, paste the data as you copied it into the cell `A2` on the `RAW` sheet.
 
 4. Navigate to the `Data` sheet using the tabs at the bottom to view your processed data and graphs.
+
