@@ -11,7 +11,9 @@ I have included both the minified version to paste into the console and also the
 
 Using the scripts to retrieve your data is very simple. 
 
-**Note:** All of the following steps were performed and screenshotted in Chrome. Other browsers may not work as intended, but feel free to try them out. Please make sure you are logged in or GeoGuessr's API won't let you access the data. 
+**Note:** All of the following steps were performed and screenshotted in Chrome. Other browsers may not work as intended, but feel free to try them out. Please make sure you are logged in or GeoGuessr's API won't let you access the data.
+
+*Note 2:** The # of duels might not match the number on your profile. I'm not sure why but frankly it's close enough that I'm not going to bother finding out.
 
 ## Phase 1: Fetching Duel IDs
 
