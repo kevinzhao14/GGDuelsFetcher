@@ -18,6 +18,7 @@ Using the scripts to retrieve your data is very simple.
 1. Open [your GeoGuessr profile](https://www.geoguessr.com/me/profile)
 
 2. Scroll to the bottom of the page and find your profile link:
+
 ![Profile link](images/profile_link.png)
 
 3. Keep note of the ID part. It should be a bunch of numbers/letters, something like `5ed8463f5422eaa2e8e51dfd`
@@ -25,6 +26,7 @@ Using the scripts to retrieve your data is very simple.
 4. While on the same page, press `F12` on your keyboard or `Right Click` and click `Inspect` at the bottom of the context menu.
 
 5. Navigate to the `Console` tab of the new window that just opened:
+
 ![Console](images/console.png)
 
 6. Paste the following code snippet into the console. Don't press enter or submit yet.
@@ -33,12 +35,15 @@ await(async(d)=>{let e="",t=[];for(let a=0;a<100;a++){console.log("Fetching page
 ```
 
 7. Replace `--->YOUR ID HERE<---` with your ID you copied in step 3. The end of the script should now look like:
+
 ![Script 1](images/step1.png)
 
 8. Press enter and wait for the script to run. By default, it will pull 100 pages of your activities (or until it runs out). Once it is done running, you should see some text printed in the console that looks something like:
+
 ![IDs](images/ids.png)
 
 9. `Right click` on this block of data and select `Copy object`:
+
 ![Copy IDs](images/copy_ids.png)
 
 10. You are done with phase 1! Make sure not to close this window, in case you need to copy it again.
@@ -59,9 +64,11 @@ const my_id = "---> YOUR ID HERE <---";
 ```
 
 4. Replace `/*---> DATA FROM LAST STEP HERE <---*/` with the data you copied at the end of Phase 1. Make sure to replace the entire thing. It should look something like:
+
 ![IDs pasted](images/ids_pasted.png)
 
 5. Replace `---> YOUR ID HERE <---` with your ID you copied at the beginning of Phase 1. If you need to, you can re-copy it from the same page. The code snippet should now look something like:
+
 ![Your ID pasted](images/my_id.png)
 
 6. Press `enter` to submit the code.
@@ -72,9 +79,11 @@ function C(e,r){let t=0,s=0,a=0;for(let n of e)a++,t+=n.distance,s+=(new Date(n.
 ```
 
 8. Press `enter` to submit the code. Wait for it to retrieve the data for each of the IDs you copied from Phase 1. Once it is done running, you should see a big block of text:
+
 ![Data output](images/data_output.png)
 
 9. `Right click` on the block of text and select "Copy string contents":
+
 ![Copy data](images/copy_string.png)
 
 10. You can now paste this data into any spreadsheet!
@@ -88,6 +97,8 @@ To visualize the data you just copied at the end of phase 2, you can make your o
 2. Under `File`, click "Make a copy".
 
 3. In your copy of the spreadsheet, paste the data as you copied it into the cell `A2` on the `RAW` sheet.
+
+![A2 Cell](images/a2.png)
 
 4. Navigate to the `Data` sheet using the tabs at the bottom to view your processed data and graphs.
 
