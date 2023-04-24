@@ -7,7 +7,7 @@ I have included both the minified version to paste into the console and also the
 
 *Disclaimer:* I do not condone the spam nor abuse of GeoGuessr's API. These script are intended for data analysis purposes only, and are not for misuse or exploitation of GeoGuessr. The use of the API is non-official, and may be revoked or blocked at any time. Not affiliated with GeoGuessr or any related entities. 
 
-# Use Instructions
+# Instructions
 
 Using the scripts to retrieve your data is very simple. 
 
