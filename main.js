@@ -80,13 +80,19 @@ function parseDuelData(data) {
     if (team.players[0].playerId === selfId) {
       res.selfHp = team.health;
 
+      console.log('t', team);
       if (team.players[0].progressChange === null) {
         res.befElo = team.players[0].rating;
         res.aftElo = "";
       } else {
         const rating = team.players[0].progressChange.competitiveProgress;
-        res.befElo = rating.ratingBefore;
-        res.aftElo = rating.ratingAfter;
+        if (rating === null) {
+          res.befElo = team.players[0].rating;
+          res.aftElo = res.befElo;
+        } else {
+          res.befElo = rating.ratingBefore;
+          res.aftElo = rating.ratingAfter;
+        }
       }
 
       [res.selfDist, res.selfTtg] = C(team.players[0].guesses, data.rounds);
