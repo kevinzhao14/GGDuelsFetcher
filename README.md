@@ -92,7 +92,7 @@ function C(e,r){let t=0,s=0,a=0;for(let n of e)a++,t+=n.distance,s+=(new Date(n.
 
 ## Phase 3: Data Visualization
 
-To visualize the data you just copied at the end of phase 2, you can make your own spreadsheet or use the one I have created. By default, the spreadsheet calculates stats up to 999 duels. If you want to include more, you might need to edit the formulas and extend the calculations sheet. To use my spreadsheet template:
+To visualize the data you just copied at the end of phase 2, you can make your own spreadsheet or use the one I have created. By default, the spreadsheet calculates stats up to 1999 duels. If you want to include more, you might need to edit the formulas and extend the calculations sheet. To use my spreadsheet template:
 
 1. Go to [the Google Sheets document](https://docs.google.com/spreadsheets/d/1rz5nRHU-lnUDRdMF8QLMaWB_JkRrGSWsUGKtE-XkPPY/edit?usp=sharing)
 
