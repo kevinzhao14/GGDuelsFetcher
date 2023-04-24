@@ -83,7 +83,7 @@ function parseDuelData(data) {
       console.log('t', team);
       if (team.players[0].progressChange === null) {
         res.befElo = team.players[0].rating;
-        res.aftElo = "";
+        res.aftElo = res.befElo;
       } else {
         const rating = team.players[0].progressChange.competitiveProgress;
         if (rating === null) {
