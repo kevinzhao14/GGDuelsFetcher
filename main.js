@@ -125,6 +125,7 @@ function calcGuessStats(guesses, rounds) {
 
 // fetch duel data from API and process
 async function getDuelData(duels) {
+  duels = duels.filter((v, i, a) => a.indexOf(v) === i);
   duelData = [];
 
   let i = 0;
