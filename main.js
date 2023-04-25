@@ -51,7 +51,7 @@ async function getAllDuels(maxPages=1, start="") {
     await promisedTimeout(() => console.log("Done"), 500);
   }
 
-  return duelIds;
+  return duelIds.filter((v, i, a) => a.indexOf(v) === i);;
 }
 
 await getAllDuels(1000);
@@ -125,7 +125,6 @@ function calcGuessStats(guesses, rounds) {
 
 // fetch duel data from API and process
 async function getDuelData(duels) {
-  duels = duels.filter((v, i, a) => a.indexOf(v) === i);
   duelData = [];
 
   let i = 0;
