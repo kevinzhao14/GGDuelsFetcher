@@ -106,3 +106,5 @@ To visualize the data you just copied at the end of phase 2, you can make your o
 
 4. Navigate to the `Data` sheet using the tabs at the bottom to view your processed data and graphs.
 
+
+### If you found this repo helpful, feel free to star it :)
