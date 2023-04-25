@@ -33,14 +33,16 @@ Using the scripts to retrieve your data is very simple.
 
 6. Paste the following code snippet into the console. Don't press enter or submit yet.
 ```javascript
-await(async(d)=>{let e="",t=[];for(let a=0;a<100;a++){console.log("Fetching page",a+1);let l="https://www.geoguessr.com/api/v4/feed/private";""!==e&&(l+="?paginationToken="+e);let n=await fetch(l),g=JSON.parse(n=await n.text());if(0===g.entries.length){console.log("All data fetched.");break}t.push(...[...n.matchAll(/\\"gameId\\":\\"([\w\d\-]*)\\",\\"gameMode\\":\\"Duels\\"/g)].map(e=>e[1])),e=btoa(`{"HashKey":{"S":"${d+"_activity"}"},"Created":{"S":"${g.entries[g.entries.length-1].time.substring(0,23)+"Z"}"}}`),await new Promise(e=>{setTimeout(()=>{e()},500)})}return t})("--->YOUR ID HERE<---");
+await(async(d,s)=>{let e="",t=[];for(let a=0;a<s;a++){console.log("Fetching page",a+1);let l="https://www.geoguessr.com/api/v4/feed/private";""!==e&&(l+="?paginationToken="+e);let n=await fetch(l),g=JSON.parse(n=await n.text());if(0===g.entries.length){console.log("All data fetched.");break}t.push(...[...n.matchAll(/\\"gameId\\":\\"([\w\d\-]*)\\",\\"gameMode\\":\\"Duels\\"/g)].map(e=>e[1])),e=btoa(`{"HashKey":{"S":"${d+"_activity"}"},"Created":{"S":"${g.entries[g.entries.length-1].time.substring(0,23)+"Z"}"}}`),await new Promise(e=>{setTimeout(()=>{e()},500)})}return t})("--->YOUR ID HERE<---",100);
 ```
 
 7. Replace `--->YOUR ID HERE<---` at the end of the script with your ID you copied in step 3. Make sure you paste your ID inside the quotation marks (`"`). The end of the script should now look like:
 
 ![Script 1](images/step1.png)
 
-8. Press enter and wait for the script to run. By default, it will pull 100 pages of your activities (or until it runs out). Make sure to keep the page open so it runs faster. It might take a few minutes to run depending on how many games you have. Once it is done running, you should see some text printed in the console that looks something like:
+8. By default, it will pull 100 pages of your recent activities. If you have a lot of singleplayer games, you can change the `100` at the end to a higher number. Otherwise, continue onto the next step.
+
+8. Press enter and wait for the script to run. Make sure to keep the page open so it runs faster. It might take a few minutes to run depending on how many games you have. Once it is done running, you should see some text printed in the console that looks something like:
 
 ![IDs](images/ids.png)
 

@@ -95,20 +95,20 @@ function parseDuelData(data) {
         }
       }
 
-      [res.selfDist, res.selfTtg] = C(team.players[0].guesses, data.rounds);
+      [res.selfDist, res.selfTtg] = calcGuessStats(team.players[0].guesses, data.rounds);
     } else {
       res.oppId = team.players[0].playerId;
       res.oppHp = team.health;
       res.oppElo = team.players[0].rating;
 
-      [res.oppDist, res.oppTtg] = C(team.players[0].guesses, data.rounds);
+      [res.oppDist, res.oppTtg] = calcGuessStats(team.players[0].guesses, data.rounds);
     }
   }
   return res;
 }
 
 // calculate guess statistics (distance, time to guess)
-function C(guesses, rounds) {
+function calcGuessStats(guesses, rounds) {
   let dist = 0;
   let ttg = 0;
   let count = 0;
@@ -124,7 +124,7 @@ function C(guesses, rounds) {
 }
 
 // fetch duel data from API and process
-async function D(duels) {
+async function getDuelData(duels) {
   duelData = [];
 
   let i = 0;
@@ -174,5 +174,5 @@ function P(data, delim="\t", headers=h) {
 }
 
 // run
-let data = await D(ids);
+let data = await getDuelData(ids);
 P(data);
