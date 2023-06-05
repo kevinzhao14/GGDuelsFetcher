@@ -23,7 +23,7 @@ function buildPagination(date) {
 }
 
 // fetch duel IDs from activity pages
-async function getAllDuels(maxPages=1, start="") {
+async function getAllDuels(maxPages=1, mostRecentId="", start="") {
   let pagination = start;
   const duelIds = [];
   for (let pages = 0; pages < maxPages; pages++) {
@@ -45,13 +45,23 @@ async function getAllDuels(maxPages=1, start="") {
     }
 
     duelIds.push(...getDuelIDs(data));
+
+    if (duelIds.includes(mostRecentId)) {
+      break;
+    }
     
     pagination = buildPagination(parsed.entries[parsed.entries.length - 1].time.substring(0, 23) + "Z");
 
     await promisedTimeout(() => console.log("Done"), 500);
   }
 
-  return duelIds.filter((v, i, a) => a.indexOf(v) === i);;
+  let uniqueIds = duelIds.filter((v, i, a) => a.indexOf(v) === i);
+
+  if (!uniqueIds.includes(mostRecentId)) {
+    return uniqueIds;
+  } else {
+    return uniqueIds.slice(0, uniqueIds.indexOf(mostRecentId));
+  }
 }
 
 await getAllDuels(1000);
@@ -95,20 +105,20 @@ function parseDuelData(data) {
         }
       }
 
-      [res.selfDist, res.selfTtg] = calcGuessStats(team.players[0].guesses, data.rounds);
+      [res.selfDist, res.selfTtg] = S(team.players[0].guesses, data.rounds);
     } else {
       res.oppId = team.players[0].playerId;
       res.oppHp = team.health;
       res.oppElo = team.players[0].rating;
 
-      [res.oppDist, res.oppTtg] = calcGuessStats(team.players[0].guesses, data.rounds);
+      [res.oppDist, res.oppTtg] = S(team.players[0].guesses, data.rounds);
     }
   }
   return res;
 }
 
 // calculate guess statistics (distance, time to guess)
-function calcGuessStats(guesses, rounds) {
+function S(guesses, rounds) {
   let dist = 0;
   let ttg = 0;
   let count = 0;
@@ -129,7 +139,7 @@ async function getDuelData(duels) {
 
   let i = 0;
 
-  for (const id of duels) {
+  for (const id of duels.slice(0, 2000)) {
     console.log("Fetching duel #" + (i++));
 
     let info = await fetch("https://game-server.geoguessr.com/api/duels/" + id);
@@ -137,7 +147,7 @@ async function getDuelData(duels) {
 
     duelData.push(parseDuelData(info));
 
-    await promisedTimeout(() => null, 100);
+    await promisedTimeout(() => null, 150);
   }
 
   return duelData;

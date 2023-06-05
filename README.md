@@ -33,7 +33,7 @@ Using the scripts to retrieve your data is very simple.
 
 6. Paste the following code snippet into the console. Don't press enter or submit yet.
 ```javascript
-await(async(d,s)=>{let e="",t=[];for(let a=0;a<s;a++){console.log("Fetching page",a+1);let l="https://www.geoguessr.com/api/v4/feed/private";""!==e&&(l+="?paginationToken="+e);let n=await fetch(l),g=JSON.parse(n=await n.text());if(0===g.entries.length){console.log("All data fetched.");break}t.push(...[...n.matchAll(/\\"gameId\\":\\"([\w\d\-]*)\\",\\"gameMode\\":\\"Duels\\"/g)].map(e=>e[1])),e=btoa(`{"HashKey":{"S":"${d+"_activity"}"},"Created":{"S":"${g.entries[g.entries.length-1].time.substring(0,23)+"Z"}"}}`),await new Promise(e=>{setTimeout(()=>{e()},500)})}return t.filter((v,i,a)=>a.indexOf(v)===i)})("--->YOUR ID HERE<---",100);
+await(async(d,s,j)=>{let e="",t=[];for(let a=0;a<s&&!t.includes(j);a++){console.log("Fetching page",a+1);let l="https://www.geoguessr.com/api/v4/feed/private";""!==e&&(l+="?paginationToken="+e);let n=await fetch(l),g=JSON.parse(n=await n.text());if(0===g.entries.length){console.log("All data fetched.");break}t.push(...[...n.matchAll(/\\"gameId\\":\\"([\w\d\-]*)\\",\\"gameMode\\":\\"Duels\\"/g)].map(e=>e[1])),e=btoa(`{"HashKey":{"S":"${d+"_activity"}"},"Created":{"S":"${g.entries[g.entries.length-1].time.substring(0,23)+"Z"}"}}`),await new Promise(e=>{setTimeout(()=>{e()},500)})}t=t.filter((v,i,a)=>a.indexOf(v)===i);return t.includes(j)?t.slice(0,t.indexOf(j)):t})("--->YOUR ID HERE<---",100);
 ```
 
 7. Replace `--->YOUR ID HERE<---` at the end of the script with your ID you copied in step 3. Make sure you paste your ID inside the quotation marks (`"`). The end of the script should now look like:
@@ -55,7 +55,7 @@ await(async(d,s)=>{let e="",t=[];for(let a=0;a<s;a++){console.log("Fetching page
 
 ## Phase 2: Fetching Duel Data
 
-From what I've tested, this step doesn't seem to work in Firefox but works fine in Chrome. I haven't tested other browsers, but if you encounter an error, try running it in Chrome first.
+From what I've tested, this step doesn't seem to work in Firefox but works fine in Chrome. I haven't tested other browsers, but if you encounter an error, try running it in Chrome first. Please note, this script will only use the first 2000 IDs you enter. If you *really* need to fetch more, then you can run it again with the other IDs.
 
 1. In a new window, navigate to the [GeoGuessr API](https://game-server.geoguessr.com/).
 
@@ -71,7 +71,7 @@ const my_id = "---> YOUR ID HERE <---";
 
 ![IDs pasted](images/ids_pasted.png)
 
-5. Replace `---> YOUR ID HERE <---` with your ID you copied at the beginning of Phase 1. If you need to, you can re-copy it from the same page. The code snippet should now look something like:
+5. Replace `---> YOUR ID HERE <---` with your ID you copied at the beginning of Phase 1. Make sure to paste your ID **inside** of the quotation marks. If you need to, you can re-copy it from the same page. The code snippet should now look something like:
 
 ![Your ID pasted](images/my_id.png)
 
@@ -79,7 +79,7 @@ const my_id = "---> YOUR ID HERE <---";
 
 7. Paste the following code snippet in the console:
 ```javascript
-function calcGuessStats(e,r){let t=0,s=0,a=0;for(let n of e)a++,t+=n.distance,s+=(new Date(n.created)-new Date(r[n.roundNumber-1].startTime))/1e3;return 0===a?["",""]:[t/a,s/a]}(await(async function D(e,r){d=[];let t=0;for(let s of r){console.log("Fetching duel #"+t++);let l=await fetch("https://game-server.geoguessr.com/api/duels/"+s);l=await l.json();let o=[];for(let i of(o[0]=l.gameId,o[1]=l.currentRoundNumber,o[2]=new Date(l.rounds[0].startTime).toLocaleString("en-US"),o[3]=new Date(l.rounds[o[1]-1].endTime).toLocaleString("en-US"),l.teams))if(i.players[0].playerId===e){if(o[4]=i.health,null===i.players[0].progressChange)o[5]=i.players[0].rating,o[6]=o[5];else{let $=i.players[0].progressChange.competitiveProgress;null===$?(o[5]=i.players[0].rating,o[6]=o[5]):(o[5]=$.ratingBefore,o[6]=$.ratingAfter)}[o[7],o[8]]=calcGuessStats(i.players[0].guesses,l.rounds)}else o[9]=i.players[0].playerId,o[10]=i.health,o[11]=i.players[0].rating,[o[12],o[13]]=calcGuessStats(i.players[0].guesses,l.rounds);d.push(o),await (new Promise(e=>{setTimeout(()=>e(),100)}))}return d})(my_id,ids)).map(v => v.join("\t")).join("\n");
+function S(e,r){let t=0,s=0,a=0;for(let n of e)a++,t+=n.distance,s+=(new Date(n.created)-new Date(r[n.roundNumber-1].startTime))/1e3;return 0===a?["",""]:[t/a,s/a]}(await(async function D(e,r){d=[];let t=1;for(let s of r.slice(0,2000)){console.log("Fetching duel #"+t++);let l=await fetch("https://game-server.geoguessr.com/api/duels/"+s);l=await l.json();let o=[];for(let i of(o[0]=l.gameId,o[1]=l.currentRoundNumber,o[2]=new Date(l.rounds[0].startTime).toLocaleString("en-US"),o[3]=new Date(l.rounds[o[1]-1].endTime).toLocaleString("en-US"),l.teams))if(i.players[0].playerId===e){if(o[4]=i.health,null===i.players[0].progressChange)o[5]=i.players[0].rating,o[6]=o[5];else{let $=i.players[0].progressChange.competitiveProgress;null===$?(o[5]=i.players[0].rating,o[6]=o[5]):(o[5]=$.ratingBefore,o[6]=$.ratingAfter)}[o[7],o[8]]=S(i.players[0].guesses,l.rounds)}else o[9]=i.players[0].playerId,o[10]=i.health,o[11]=i.players[0].rating,[o[12],o[13]]=S(i.players[0].guesses,l.rounds);d.push(o),await (new Promise(e=>{setTimeout(()=>e(),100)}))}return d})(my_id,ids)).map(v => v.join("\t")).join("\n");
 ```
 
 8. Press `enter` to submit the code. Wait for it to retrieve the data for each of the IDs you copied from Phase 1. Make sure to keep the page open so it runs faster. It might take a few minutes to run depending on how many games you have. Once it is done running, you should see a big block of text:
@@ -94,15 +94,32 @@ function calcGuessStats(e,r){let t=0,s=0,a=0;for(let n of e)a++,t+=n.distance,s+
 
 ## Phase 3: Data Visualization
 
-To visualize the data you just copied at the end of phase 2, you can make your own spreadsheet or use the one I have created. By default, the spreadsheet calculates stats up to 1999 duels. If you want to include more, you might need to edit the formulas and extend the calculations sheet. To use my spreadsheet template:
+To visualize the data you just copied at the end of phase 2, you can make your own spreadsheet or use the one I have created. By default, the spreadsheet calculates stats up to 5000 duels. If you want to include more, you might need to edit the formulas and extend the calculations sheet. To use my spreadsheet template:
 
 1. Go to [the Google Sheets document](https://docs.google.com/spreadsheets/d/1rz5nRHU-lnUDRdMF8QLMaWB_JkRrGSWsUGKtE-XkPPY/edit?usp=sharing)
 
 2. Under `File`, click "Make a copy".
 
-3. In your copy of the spreadsheet, paste the data as you copied it into the cell `A2` on the `RAW` sheet.
+3. In your copy of the spreadsheet, paste the data as you copied it into the cell `A1` on the sheet named `PASTE HERE`. If needed, you can navigate to the sheet from the tabs at the bottom-left.
 
-![A2 Cell](images/a2.png)
+![A1 Cell](images/A1.png)
 
 4. Navigate to the `Data` sheet using the tabs at the bottom to view your processed data and graphs.
 
+
+## Phase 4: Updating your stats
+If you want to update your stats after playing more duels, you can do so very easily. 
+
+**Note:** If your spreadsheet version is before `v1.1`, you'll need to re-copy the spreadsheet and paste your data into cell `A1` on the sheet named `PASTE HERE`.
+
+1. From your spreadsheet, copy the ID of your most recent duels match. If you're using my spreadsheet, it should be cell `A2` of the `CALC` sheet.
+2. Follow Phase 1 and 2 from above like before. However, once you reach Phase 1 Step 8, add your most recent duels ID, inside quotation marks, after the `100` like so:
+
+![Updated Script](images/update.png)
+
+3. Complete the rest of Phase 1 and 2 like before.
+4. Once done, you can paste your raw stats string into column 1 of any row of the spreadsheet (although it might be best for you to paste it right after your old stats).
+
+![Paste New Stats](images/updatepaste.png)
+
+5. Your stats should automatically update. Enjoy!
