@@ -105,13 +105,13 @@ function parseDuelData(data) {
         }
       }
 
-      [res.selfDist, res.selfTtg] = S(team.players[0].guesses, data.rounds);
+      [res.selfDist, res.selfTtg, res.selfCountries] = S(team.players[0].guesses, data.rounds);
     } else {
       res.oppId = team.players[0].playerId;
       res.oppHp = team.health;
       res.oppElo = team.players[0].rating;
 
-      [res.oppDist, res.oppTtg] = S(team.players[0].guesses, data.rounds);
+      [res.oppDist, res.oppTtg, blank] = S(team.players[0].guesses, data.rounds);
     }
   }
   return res;
@@ -122,15 +122,29 @@ function S(guesses, rounds) {
   let dist = 0;
   let ttg = 0;
   let count = 0;
+  let countries = {};
   for (const guess of guesses) {
     count++;
     dist += guess.distance;
-    ttg += ((new Date(guess.created)) - (new Date(rounds[guess.roundNumber - 1].startTime))) / 1000;
+    let time = ((new Date(guess.created)) - (new Date(rounds[guess.roundNumber - 1].startTime))) / 1000;
+    ttg += time;
+
+
+    let country = rounds[guess.roundNumber - 1].panorama?.countryCode;
+    if (country === "") {
+      continue;
+    }
+    if (!(country in countries)) {
+      countries[country] = [0,0,0];
+    }
+    countries[country][0]++;
+    countries[country][1] += guess.distance;
+    countries[country][2] += time;
   }
   if (count === 0) {
     return ["", ""];
   }
-  return [dist / count, ttg / count];
+  return [dist / count, ttg / count, Object.entries(countries).map(e => e[0] + "," + e[1].join(",")).join(";")];
 }
 
 // fetch duel data from API and process
