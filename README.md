@@ -7,6 +7,15 @@ I have included both the minified version to paste into the console and also the
 
 *Disclaimer:* I do not condone the spam nor abuse of GeoGuessr's API. These scripts are intended for data analysis purposes only, and are not for misuse or exploitation of GeoGuessr. The use of the API is non-official, and may be revoked or blocked at any time. Not affiliated with GeoGuessr or any related entities. By using this script, you acknowledge and agree that the author and publisher shall not be liable for any damages or injuries whatsoever resulting from your use or inability to use the script, even if the author or publisher has been advised of the possibility of such damages.
 
+
+# Changelog
+
+**v1.0** - Initial Release
+
+**v1.1** - Added random-order input for updating data
+
+**v1.2** - Added date filter to spreadsheet 
+
 # Instructions
 
 Using the scripts to retrieve your data is very simple. 
