@@ -105,7 +105,7 @@ function parseDuelData(data) {
         }
       }
 
-      [res.selfDist, res.selfTtg, res.selfCountries] = S(team.players[0].guesses, data.rounds);
+      [res.selfDist, res.selfTtg, res.selfCountries] = S(team.players[0].guesses, data.rounds, team.roundResults);
     } else {
       res.oppId = team.players[0].playerId;
       res.oppHp = team.health;
@@ -118,7 +118,7 @@ function parseDuelData(data) {
 }
 
 // calculate guess statistics (distance, time to guess)
-function S(guesses, rounds) {
+function S(guesses, rounds, results=null) {
   let dist = 0;
   let ttg = 0;
   let count = 0;
@@ -126,20 +126,34 @@ function S(guesses, rounds) {
   for (const guess of guesses) {
     count++;
     dist += guess.distance;
-    let time = ((new Date(guess.created)) - (new Date(rounds[guess.roundNumber - 1].startTime))) / 1000;
+    let rn = guess.roundNumber - 1;
+    let time = ((new Date(guess.created)) - (new Date(rounds[rn].startTime))) / 1000;
     ttg += time;
 
+    if (!results) continue;
 
-    let country = rounds[guess.roundNumber - 1].panorama?.countryCode;
+    let country = rounds[rn].panorama?.countryCode;
     if (country === "") {
       continue;
     }
     if (!(country in countries)) {
-      countries[country] = [0,0,0];
+      countries[country] = [0,0,0,0];
     }
+    // # rounds
     countries[country][0]++;
+    // distance
     countries[country][1] += guess.distance;
+    // time
     countries[country][2] += time;
+    if (results[rn].healthAfter === results[rn].healthBefore) {
+      // rounds won
+      countries[country][3]++;
+    } 
+    // else if (rn < num - 1) {
+    //   // damage dealt on lost rounds
+    //   countries[country][4] += damage / rounds[rn].damageMultiplier;
+    // }
+
   }
   if (count === 0) {
     return ["", ""];
