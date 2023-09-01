@@ -16,6 +16,8 @@ I have included both the minified version to paste into the console and also the
 
 **v1.2** - Added date filter to spreadsheet 
 
+**v1.3** - Added country data & stats
+
 # Instructions
 
 Using the scripts to retrieve your data is very simple. 
@@ -105,7 +107,7 @@ function S(e,r,l,p){let t=0,s=0,a=0,c={};for(let n of e){let u=n.roundNumber-1,m
 
 To visualize the data you just copied at the end of phase 2, you can make your own spreadsheet or use the one I have created. By default, the spreadsheet calculates stats up to 5000 duels. If you want to include more, you might need to edit the formulas and extend the calculations sheet. To use my spreadsheet template:
 
-1. Go to [the Google Sheets document](https://docs.google.com/spreadsheets/d/1rz5nRHU-lnUDRdMF8QLMaWB_JkRrGSWsUGKtE-XkPPY/edit?usp=sharing)
+1. Go to [the Google Sheets document](https://docs.google.com/spreadsheets/d/1sA3tKcNp77RXoKCJt7kQ_Nl2gOusgLFNzgmT9ofU3eE/edit?usp=sharing)
 
 2. Under `File`, click "Make a copy".
 
