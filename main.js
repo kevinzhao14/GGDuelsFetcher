@@ -86,7 +86,8 @@ function parseDuelData(data) {
   res.startDate = (new Date(data.rounds[0].startTime)).toLocaleString("en-US");
   res.endDate = (new Date(data.rounds[res.rounds - 1].endTime)).toLocaleString("en-US");
 
-  for (const team of data.teams) {
+  for (let i in [0, 1]) {
+    let team = data.teams[i];
     if (team.players[0].playerId === selfId) {
       res.selfHp = team.health;
 
@@ -105,7 +106,7 @@ function parseDuelData(data) {
         }
       }
 
-      [res.selfDist, res.selfTtg, res.selfCountries] = S(team.players[0].guesses, data.rounds, team.roundResults);
+      [res.selfDist, res.selfTtg, res.selfCountries] = S(team.players[0].guesses, data.rounds, team.roundResults, data.teams[1 - i].roundResults);
     } else {
       res.oppId = team.players[0].playerId;
       res.oppHp = team.health;
@@ -118,16 +119,16 @@ function parseDuelData(data) {
 }
 
 // calculate guess statistics (distance, time to guess)
-function S(guesses, rounds, results=null) {
+function S(guesses, rounds, results=null, opp=null) {
   let dist = 0;
   let ttg = 0;
   let count = 0;
   let countries = {};
   for (const guess of guesses) {
-    count++;
-    dist += guess.distance;
     let rn = guess.roundNumber - 1;
     let time = ((new Date(guess.created)) - (new Date(rounds[rn].startTime))) / 1000;
+    count++;
+    dist += guess.distance;
     ttg += time;
 
     if (!results) continue;
@@ -137,7 +138,7 @@ function S(guesses, rounds, results=null) {
       continue;
     }
     if (!(country in countries)) {
-      countries[country] = [0,0,0,0];
+      countries[country] = [0,0,0,0,0];
     }
     // # rounds
     countries[country][0]++;
@@ -145,10 +146,12 @@ function S(guesses, rounds, results=null) {
     countries[country][1] += guess.distance;
     // time
     countries[country][2] += time;
-    if (results[rn].healthAfter === results[rn].healthBefore) {
+    if (results[rn].healthAfter >= results[rn].healthBefore) {
       // rounds won
       countries[country][3]++;
-    } 
+    } else {
+      countries[country][4] += opp[rn].score - results[rn].score;
+    }
     // else if (rn < num - 1) {
     //   // damage dealt on lost rounds
     //   countries[country][4] += damage / rounds[rn].damageMultiplier;
