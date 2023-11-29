@@ -138,7 +138,7 @@ function S(guesses, rounds, results=null, opp=null) {
       continue;
     }
     if (!(country in countries)) {
-      countries[country] = [0,0,0,0,0];
+      countries[country] = [0,0,0,0,0,0]; // # rounds, total distance, total time-to-guess, # rounds won, score diff on lost rounds, score diff
     }
     // # rounds
     countries[country][0]++;
@@ -152,6 +152,7 @@ function S(guesses, rounds, results=null, opp=null) {
     } else {
       countries[country][4] += opp[rn].score - results[rn].score;
     }
+    countries [country][5] += results[rn].score - opp[rn].score;
     // else if (rn < num - 1) {
     //   // damage dealt on lost rounds
     //   countries[country][4] += damage / rounds[rn].damageMultiplier;

@@ -18,6 +18,8 @@ I have included both the minified version to paste into the console and also the
 
 **v1.3** - Added country data & stats
 
+**v1.4** - Added median damage diff (dealt - taken) on all rounds per country
+
 # Instructions
 
 Using the scripts to retrieve your data is very simple. 
